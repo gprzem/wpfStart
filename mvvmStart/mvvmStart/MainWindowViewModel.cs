@@ -14,7 +14,10 @@ namespace mvvmStart
         public MainWindowViewModel()
         {
             _person = new Person();
+            _repo = new DataRepository();
         }
+
+        private DataRepository _repo;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -66,21 +69,26 @@ namespace mvvmStart
 
         private void SayHiExecute()
         {
-            if (!PersonExist(_person))
-            {
-                MessageBox.Show(string.Format("Witaj {0} {1}", _person.FirstName, _person.LastName));
-            }
+            MessageBox.Show(string.Format("Witaj {0} {1}", _person.FirstName, _person.LastName));
+            _repo.SavePerson(_person);
+            _person = new Person();
+            OnPropertyChanged("FirstName");
+            OnPropertyChanged("LastName");
+            OnPropertyChanged("Address");
         }
+
 
         private bool CanSayHiExecute()
         {
-            //Some logic
-            return true;
+            if (PersonExist(_person))
+                return false;
+            else
+                return true;
         }
 
         private bool PersonExist(Person _person)
         {
-            return false;
+            return _repo.CheckIfExist(_person);
         }
     }
 }

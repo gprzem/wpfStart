@@ -9,8 +9,37 @@ using System.Xml.Serialization;
 namespace mvvmStart
 {
     [Serializable]
-    class Person
+    public class Person
     {
+        public Person(Person _person)
+        {
+            FirstName = _person.FirstName;
+            LastName = _person.LastName;
+            Address = _person.Address;
+        }
+
+        public Person()
+        {
+        }
+
+        public static bool operator ==(Person first, Person second)
+        {
+            if (first.FirstName == second.FirstName
+                && first.LastName == second.LastName
+                && first.Address == second.Address)
+                return true;
+            return false;
+        }
+
+        public static bool operator !=(Person first, Person second)
+        {
+            if (first.FirstName != second.FirstName
+                || first.LastName != second.LastName
+                || first.Address != second.Address)
+                return true;
+            return false;
+        }
+
         [XmlAttribute]
         public string FirstName { get; set; }
         [XmlAttribute]
