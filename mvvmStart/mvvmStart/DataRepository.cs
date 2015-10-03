@@ -24,7 +24,7 @@ namespace mvvmStart
             filePath = String.Format("{0}\\{1}", dataDirectoryPath, fileName);
             if (!File.Exists(filePath))
             {
-                File.Create(filePath);
+                File.Create(filePath).Close();
             }
         }
         private static string fileName = "personData.xml";
